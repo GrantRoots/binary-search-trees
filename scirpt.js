@@ -62,23 +62,71 @@ class Tree {
                 }
                 currentNode = currentNode.right
             }
+            if (currentNode === null) {
+                return 'not found'
+            }
         }
+        return 'duplicate'
     }
     
     deleteItem(value) {
+        let current = this.root
+        let previous = null
+        while (value !== current.data) {
+            // console.log(value)
+            // console.log(current.data)
+            //left
+            if (value < current.data) {
+                previous = current
+                current = current.left
+            }
+            //right
+            if (value > current.data) {
+                previous = current
+                current = current.right
+            }
+            if (current === null) {
+                return 'not found'
+            }
+        }
         //leaf
-        if (value === root) {
-    
+        //current = null
+        if (current.left === null && current.right === null) {
+            return current = null
         }
-        if (value < root) {
-    
-        }
+
     
         //one child
+        //replace it with child
+        //its parent points to its child
+        if (current.left !== null && current.right === null) {
+            if (previous.right === value) {
+                return previous.right = current.left
+            }
+            return previous.left = current.left
+        }
+
+        if (current.right !== null && current.left === null) {
+            if (previous.right === value) {
+                return previous.right = current.right
+            }
+            return previous.left = current.right
+        }
     
     
         //two children
         //replace with next biggest
+        //far left of its right subtree
+        //go right once then left as much as possible
+        let smallestNode = current.right
+        previous = null
+        while (smallestNode.left !== null) {
+            previous = smallestNode
+            smallestNode = smallestNode.left
+        }
+        current.data = smallestNode.data
+        previous.left = smallestNode.right
+        return smallestNode = null
     }
     
     find(value) {
@@ -134,10 +182,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 //testing
 
 let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-console.log(test.root)
 
 prettyPrint(test.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]))
 
 test.insert('2')
-console.log(test.root)
+prettyPrint(test.root)
+test.deleteItem('4')
 prettyPrint(test.root)

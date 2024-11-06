@@ -15,8 +15,11 @@ class Tree {
     }
 
     buildTree(array) {
-        if (array.length <= 1) {
+        if (array.length === 1) {
             return new Node(array[0])
+        }
+        if (array.length === 0) {
+            return null
         }
         let sortedArray = array.sort(function(a, b) {
             return a - b
@@ -72,9 +75,7 @@ class Tree {
     deleteItem(value) {
         let current = this.root
         let previous = null
-        while (value !== current.data) {
-            // console.log(value)
-            // console.log(current.data)
+        while (value != current.data) {
             //left
             if (value < current.data) {
                 previous = current
@@ -90,11 +91,12 @@ class Tree {
             }
         }
         //leaf
-        //current = null
         if (current.left === null && current.right === null) {
-            return current = null
+            if (previous.right.data === value) {
+                return previous.right = null
+            }
+            return previous.left = null
         }
-
     
         //one child
         //replace it with child
@@ -112,7 +114,6 @@ class Tree {
             }
             return previous.left = current.right
         }
-    
     
         //two children
         //replace with next biggest
@@ -187,5 +188,5 @@ prettyPrint(test.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]))
 
 test.insert('2')
 prettyPrint(test.root)
-test.deleteItem('4')
+test.deleteItem('3')
 prettyPrint(test.root)

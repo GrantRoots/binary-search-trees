@@ -93,9 +93,11 @@ class Tree {
         //leaf
         if (current.left === null && current.right === null) {
             if (previous.right.data === value) {
-                return previous.right = null
+                previous.right = null
+                return
             }
-            return previous.left = null
+            previous.left = null
+            return
         }
     
         //one child
@@ -103,16 +105,20 @@ class Tree {
         //its parent points to its child
         if (current.left !== null && current.right === null) {
             if (previous.right === value) {
-                return previous.right = current.left
+                previous.right = current.left
+                return
             }
-            return previous.left = current.left
+            previous.left = current.left
+            return
         }
 
         if (current.right !== null && current.left === null) {
             if (previous.right === value) {
-                return previous.right = current.right
+                previous.right = current.right
+                return
             }
-            return previous.left = current.right
+            previous.left = current.right
+            return
         }
     
         //two children
@@ -127,7 +133,8 @@ class Tree {
         }
         current.data = smallestNode.data
         previous.left = smallestNode.right
-        return smallestNode = null
+        smallestNode = null
+        return
     }
     
     find(value) {
@@ -149,7 +156,20 @@ class Tree {
     }
     
     levelOrder(callback) {
-    
+        if (!callback) {
+            throw Error('Callback Required')
+        }
+        let queue = []
+        let current = this.root
+        queue.push(current)
+        while (queue.length > 0) {
+            //call callback on queue[0]?
+            callback(queue[0])
+            queue.push(current.left)
+            queue.push(current.right)
+            queue.shift()
+            current = queue[0]
+        }
     }
     
     inOrder(callback) {

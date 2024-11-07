@@ -187,7 +187,7 @@ class Tree {
             if (current.left !== null) {
                 recursive(current.left)
             }
-            callback(current.data)
+            callback(current)
             if (current.right !== null) {
                 recursive(current.right)
             }
@@ -202,7 +202,7 @@ class Tree {
         //root - left - right
         let current = this.root
         function recursive(current) {
-            callback(current.data)
+            callback(current)
             if (current.left !== null) {
                 recursive(current.left)
             }
@@ -226,7 +226,7 @@ class Tree {
             if (current.right !== null) {
                 recursive(current.right)
             }
-            callback(current.data)
+            callback(current)
         }
         recursive(current)
     }
@@ -266,7 +266,23 @@ class Tree {
     }
     
     isBalanced() {
-        
+        let leftTree = this.root.left
+        let rightTree = this.root.right
+        let leftHeight = this.height(leftTree.data)
+        let rightHeight = this.height(rightTree.data)
+
+        // if height is bigger by 2 return false
+        if (leftHeight > rightHeight) {
+            if (leftHeight > rightHeight + 1) {
+                return false
+            }
+        }
+        if (leftHeight < rightHeight) {
+            if (leftHeight + 1 < rightHeight) {
+                return false
+            }
+        }
+        return true
     }
     
     rebalance() {
@@ -301,7 +317,7 @@ let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(test.root)
 // console.log('deleted')
 
-console.log(test.find(7), 'find')
+//console.log(test.find(7), 'find')
 
 // let testArr = []
 // function testFunc(x) {
@@ -313,4 +329,5 @@ console.log(test.find(7), 'find')
 // test.postOrder(testFunc)
 
 //console.log(test.height(7), 'height')
-console.log(test.depth(7), 'depth')
+//console.log(test.depth(7), 'depth')
+console.log(test.isBalanced())

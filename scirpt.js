@@ -156,7 +156,7 @@ class Tree {
     }
     
     levelOrder(callback) {
-        if (!callback) {
+        if (typeof callback !== 'function') {
             throw Error('Callback Required')
         }
         let queue = []
@@ -165,23 +165,70 @@ class Tree {
         while (queue.length > 0) {
             //call callback on queue[0]?
             callback(queue[0])
-            queue.push(current.left)
-            queue.push(current.right)
+            if (current.left) {
+                queue.push(current.left)
+            }
+            if (current.right) {
+                queue.push(current.right)
+            }
             queue.shift()
             current = queue[0]
         }
     }
     
     inOrder(callback) {
-    
+        //does recursion even work
+        if (typeof callback !== 'function') {
+            throw Error('Callback Required')
+        }
+        //left - root - right
+        let current = this.root
+        function recursive() {
+            if (current === null) {
+                return null
+            }
+            current = current.left
+            recursive(current)
+            callback(current)
+            current = current.right
+            recursive(current)
+            return
+        }
     }
     
     preOrder(callback) {
-    
+        if (typeof callback !== 'function') {
+            throw Error('Callback Required')
+        }
+        //root - left - right
+        let current = this.root
+        if (!current) {
+            return null
+        }
+        //callback root then go left
+        callback(current)
+        current = current.left
+        this.preOrder(current)
+        //repeat recursive callback
+        //then go right
+        current = current.right
+        this.preOrder(current)
     }
     
     postOrder(callback) {
-    
+        if (typeof callback !== 'function') {
+            throw Error('Callback Required')
+        }
+        //left - right - root
+        let current = this.root
+        if (!current) {
+            return null
+        }
+        current = current.left
+        this.postOrder(current)
+        current = current.right
+        this.postOrder(current)
+        callback(current)
     }
     
     height(node) {
@@ -218,14 +265,21 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-prettyPrint(test.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]))
+// prettyPrint(test.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]))
 
-test.insert(4)
+// test.insert(4)
+// prettyPrint(test.root)
+// console.log('inserted')
+
+// test.deleteItem(3)
 prettyPrint(test.root)
-console.log('inserted')
+// console.log('deleted')
 
-test.deleteItem(3)
-prettyPrint(test.root)
-console.log('deleted')
+// console.log(test.find(7), 'find')
 
-console.log(test.find(7))
+let testArr = []
+function testFunc(x) {
+    testArr.push(x)
+    console.log(testArr)
+}
+test.levelOrder(testFunc)

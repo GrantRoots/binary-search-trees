@@ -251,7 +251,21 @@ class Tree {
     }
     
     depth(node) {
-    
+        let current = this.find(node)
+        let depthRoot = this.root
+        let depth = 0
+        while (depthRoot.data !== current.data) {
+            //if root is more go left
+            if (depthRoot.data > current.data) {
+                depthRoot = depthRoot.left
+                depth++
+            }
+            if (depthRoot.data < current.data) {
+                depthRoot = depthRoot.right
+                depth++
+            }
+        }
+        return depth
     }
     
     isBalanced() {
@@ -301,4 +315,5 @@ console.log(test.find(7), 'find')
 // test.preOrder(testFunc)
 // test.postOrder(testFunc)
 
-console.log(test.height(7), 'height')
+//console.log(test.height(7), 'height')
+console.log(test.depth(7), 'depth')

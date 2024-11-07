@@ -221,14 +221,17 @@ class Tree {
         }
         //left - right - root
         let current = this.root
-        if (!current) {
-            return null
+        function recursive(current) {
+            if (current.left !== null) {
+                console.log(current.data)
+                recursive(current.left)
+            }
+            if (current.right !== null) {
+                recursive(current.right)
+            }
+            callback(current.data)
         }
-        current = current.left
-        this.postOrder(current)
-        current = current.right
-        this.postOrder(current)
-        callback(current)
+        recursive(current)
     }
     
     height(node) {
@@ -267,7 +270,7 @@ let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 // prettyPrint(test.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]))
 
-// test.insert(4)
+//test.insert(2)
 // prettyPrint(test.root)
 // console.log('inserted')
 
@@ -282,4 +285,4 @@ function testFunc(x) {
     testArr.push(x)
     console.log(testArr)
 }
-test.preOrder(testFunc)
+test.postOrder(testFunc)

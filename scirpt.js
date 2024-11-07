@@ -235,7 +235,19 @@ class Tree {
     }
     
     height(node) {
-    
+        let current = this.find(node)
+        let height = 0
+        //how to know if left or right is longer?
+        while (current.left !== null || current.right !== null) {
+            if (current.left !== null) {
+                height++
+                current = current.left
+                continue
+            }
+            height++
+            current = current.right
+        }
+        return height
     }
     
     depth(node) {
@@ -278,11 +290,15 @@ let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(test.root)
 // console.log('deleted')
 
-// console.log(test.find(7), 'find')
+console.log(test.find(7), 'find')
 
-let testArr = []
-function testFunc(x) {
-    testArr.push(x)
-    console.log(testArr)
-}
-test.postOrder(testFunc)
+// let testArr = []
+// function testFunc(x) {
+//     testArr.push(x)
+//     console.log(testArr)
+// }
+// test.inOrder(testFunc)
+// test.preOrder(testFunc)
+// test.postOrder(testFunc)
+
+console.log(test.height(7), 'height')

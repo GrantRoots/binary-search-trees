@@ -183,17 +183,17 @@ class Tree {
         }
         //left - root - right
         let current = this.root
-        function recursive() {
-            if (current === null) {
-                return null
+        function recursive(current) {
+            if (current.left !== null) {
+                console.log(current.data)
+                recursive(current.left)
             }
-            current = current.left
-            recursive(current)
-            callback(current)
-            current = current.right
-            recursive(current)
-            return
+            callback(current.data)
+            if (current.right !== null) {
+                recursive(current.right)
+            }
         }
+        recursive(current)
     }
     
     preOrder(callback) {
@@ -282,4 +282,4 @@ function testFunc(x) {
     testArr.push(x)
     console.log(testArr)
 }
-test.levelOrder(testFunc)
+test.inOrder(testFunc)

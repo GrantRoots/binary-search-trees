@@ -202,17 +202,17 @@ class Tree {
         }
         //root - left - right
         let current = this.root
-        if (!current) {
-            return null
+        function recursive(current) {
+            callback(current.data)
+            if (current.left !== null) {
+                console.log(current.data)
+                recursive(current.left)
+            }
+            if (current.right !== null) {
+                recursive(current.right)
+            }
         }
-        //callback root then go left
-        callback(current)
-        current = current.left
-        this.preOrder(current)
-        //repeat recursive callback
-        //then go right
-        current = current.right
-        this.preOrder(current)
+        recursive(current)
     }
     
     postOrder(callback) {
@@ -282,4 +282,4 @@ function testFunc(x) {
     testArr.push(x)
     console.log(testArr)
 }
-test.inOrder(testFunc)
+test.preOrder(testFunc)

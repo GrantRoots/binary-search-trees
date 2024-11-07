@@ -185,7 +185,6 @@ class Tree {
         let current = this.root
         function recursive(current) {
             if (current.left !== null) {
-                console.log(current.data)
                 recursive(current.left)
             }
             callback(current.data)
@@ -205,7 +204,6 @@ class Tree {
         function recursive(current) {
             callback(current.data)
             if (current.left !== null) {
-                console.log(current.data)
                 recursive(current.left)
             }
             if (current.right !== null) {
@@ -223,7 +221,6 @@ class Tree {
         let current = this.root
         function recursive(current) {
             if (current.left !== null) {
-                console.log(current.data)
                 recursive(current.left)
             }
             if (current.right !== null) {
@@ -269,7 +266,7 @@ class Tree {
     }
     
     isBalanced() {
-    
+        
     }
     
     rebalance() {

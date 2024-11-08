@@ -233,18 +233,16 @@ class Tree {
     
     height(node) {
         let current = this.find(node)
-        let height = 0
-        //how to know if left or right is longer?
-        while (current.left !== null || current.right !== null) {
-            if (current.left !== null) {
-                height++
-                current = current.left
-                continue
+        function checkSides (current) {
+            if (current === null) {
+                return 0
             }
-            height++
-            current = current.right
+            let leftHeight = checkSides(current.left)
+            let rightHeight = checkSides(current.right)
+
+            return Math.max(leftHeight, rightHeight) + 1
         }
-        return height
+        return checkSides(current)
     }
     
     depth(node) {
@@ -349,6 +347,8 @@ test.insert(95)
 test.insert(96)
 console.log(prettyPrint(test.root))
 
-console.log(test.isBalanced())
+console.log(test.height(8), 'height')
+
+console.log(test.isBalanced(), 'is balanced')
 test.rebalance()
 console.log(prettyPrint(test.root))

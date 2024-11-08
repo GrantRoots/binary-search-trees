@@ -164,7 +164,7 @@ class Tree {
         queue.push(current)
         while (queue.length > 0) {
             //call callback on queue[0]?
-            callback(queue[0])
+            callback(queue[0].data)
             if (current.left) {
                 queue.push(current.left)
             }
@@ -187,7 +187,7 @@ class Tree {
             if (current.left !== null) {
                 recursive(current.left)
             }
-            callback(current)
+            callback(current.data)
             if (current.right !== null) {
                 recursive(current.right)
             }
@@ -202,7 +202,7 @@ class Tree {
         //root - left - right
         let current = this.root
         function recursive(current) {
-            callback(current)
+            callback(current.data)
             if (current.left !== null) {
                 recursive(current.left)
             }
@@ -226,7 +226,7 @@ class Tree {
             if (current.right !== null) {
                 recursive(current.right)
             }
-            callback(current)
+            callback(current.data)
         }
         recursive(current)
     }
@@ -286,7 +286,16 @@ class Tree {
     }
     
     rebalance() {
+        // put all node.data in array
+        let allNodes = []
+        function pushNodes(x) {
+            allNodes.push(x)
+        }
+        this.inOrder(pushNodes)
+        console.log(allNodes)
 
+        //run them in buildTree and update root
+        this.root = this.buildTree(allNodes)
     }
 }
 
@@ -330,4 +339,16 @@ prettyPrint(test.root)
 
 //console.log(test.height(7), 'height')
 //console.log(test.depth(7), 'depth')
+//console.log(test.isBalanced())
+
+test.insert(91)
+test.insert(92)
+test.insert(93)
+test.insert(94)
+test.insert(95)
+test.insert(96)
+console.log(prettyPrint(test.root))
+
 console.log(test.isBalanced())
+test.rebalance()
+console.log(prettyPrint(test.root))

@@ -1,6 +1,6 @@
 # Binary Search Tree
 
-Project to create and run all the operations of a binary search tree (BST).
+Project to create and run all the operations of a binary search tree (BST) using JavaScript.
 
 ## Features
 
